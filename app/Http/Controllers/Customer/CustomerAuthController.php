@@ -29,9 +29,9 @@ class CustomerAuthController extends Controller
             'status' => 1
         ];
 
-        if(Auth::guard('customer')->attempt($credential)) {
+        if (auth()->guard('customer')->attempt($credential)) {
             return redirect()->route('customer_home');
-        } else {            
+        } else {
             return redirect()->route('customer_login')->with('error', 'Information is not correct!');
         }
     }
@@ -47,47 +47,45 @@ class CustomerAuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:customers',
             'password' => 'required',
-            'retype_password' =>'required|same:password'
+            'retype_password' => 'required|same:password'
         ]);
 
 
         $token = hash('sha256', time());
         $password = Hash::make($request->password);
-        $verification_link = url('signup-verify/'.$request->email.'/'.$token);
+        // $verification_link = url('signup-verify/' . $request->email . '/' . $token);
 
         $obj = new Customer();
         $obj->name = $request->name;
         $obj->email = $request->email;
         $obj->password = $password;
         $obj->token = $token;
-        $obj->status = 0;
+        $obj->status = 1;
         $obj->save();
 
-        // Send email
-        $subject = 'Sign Up Verification';
-        $message = 'Please click on the link below to confirm sign up process:<br>';
-        $message .= '<a href="'.$verification_link.'">';
-        $message .= $verification_link;
-        $message .= '</a>';
+        // // Send email
+        // $subject = 'Sign Up Verification';
+        // $message = 'Please click on the link below to confirm sign up process:<br>';
+        // $message .= '<a href="' . $verification_link . '">';
+        // $message .= $verification_link;
+        // $message .= '</a>';
 
-        \Mail::to($request->email)->send(new Websitemail($subject,$message));
+        // \Mail::to($request->email)->send(new Websitemail($subject, $message));
 
         return redirect()->back()->with('success', 'To complete the signup, please check your email and click on the link');
-
     }
 
-    public function signup_verify($email,$token)
+    public function signup_verify($email, $token)
     {
-        $customer_data = Customer::where('email',$email)->where('token',$token)->first();
+        $customer_data = Customer::where('email', $email)->where('token', $token)->first();
 
-        if($customer_data) {
-            
+        if ($customer_data) {
+
             $customer_data->token = '';
             $customer_data->status = 1;
             $customer_data->update();
 
             return redirect()->route('customer_login')->with('success', 'Your account is verified successfully!');
-
         } else {
             return redirect()->route('customer_login');
         }
@@ -95,7 +93,7 @@ class CustomerAuthController extends Controller
 
     public function logout()
     {
-        Auth::guard('customer')->logout();
+        auth()->guard('customer')->logout();
         return redirect()->route('customer_login');
     }
 
@@ -110,37 +108,35 @@ class CustomerAuthController extends Controller
             'email' => 'required|email'
         ]);
 
-        $customer_data = Customer::where('email',$request->email)->first();
-        if(!$customer_data) {
-            return redirect()->back()->with('error','Email address not found!');
+        $customer_data = Customer::where('email', $request->email)->first();
+        if (!$customer_data) {
+            return redirect()->back()->with('error', 'Email address not found!');
         }
 
-        $token = hash('sha256',time());
+        $token = hash('sha256', time());
 
         $customer_data->token = $token;
         $customer_data->update();
 
-        $reset_link = url('reset-password/'.$token.'/'.$request->email);
+        $reset_link = url('reset-password/' . $token . '/' . $request->email);
         $subject = 'Reset Password';
         $message = 'Please click on the following link to reset the password: <br>';
-        $message .= '<a href="'.$reset_link.'">Click here</a>';
+        $message .= '<a href="' . $reset_link . '">Click here</a>';
 
-        \Mail::to($request->email)->send(new Websitemail($subject,$message));
+        // \Mail::to($request->email)->send(new Websitemail($subject, $message));
 
-        return redirect()->route('customer_login')->with('success','Please check your email and follow the steps there');
-
+        return redirect()->route('customer_login')->with('success', 'Please check your email and follow the steps there');
     }
 
 
-    public function reset_password($token,$email)
+    public function reset_password($token, $email)
     {
-        $customer_data = Customer::where('token',$token)->where('email',$email)->first();
-        if(!$customer_data) {
+        $customer_data = Customer::where('token', $token)->where('email', $email)->first();
+        if (!$customer_data) {
             return redirect()->route('customer_login');
         }
 
-        return view('front.reset_password', compact('token','email'));
-
+        return view('front.reset_password', compact('token', 'email'));
     }
 
     public function reset_password_submit(Request $request)
@@ -150,14 +146,12 @@ class CustomerAuthController extends Controller
             'retype_password' => 'required|same:password'
         ]);
 
-        $customer_data = Customer::where('token',$request->token)->where('email',$request->email)->first();
+        $customer_data = Customer::where('token', $request->token)->where('email', $request->email)->first();
 
         $customer_data->password = Hash::make($request->password);
         $customer_data->token = '';
         $customer_data->update();
 
         return redirect()->route('customer_login')->with('success', 'Password is reset successfully');
-
     }
-
 }

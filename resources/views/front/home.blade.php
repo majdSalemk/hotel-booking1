@@ -25,7 +25,7 @@
  
 <div class="search-section">
     <div class="container">
-        <form action="{{ route('cart_submit') }}" method="post">
+        <form action="{{ route('reservation_submit') }}" method="post">
             @csrf
             <div class="inner">
                 <div class="row">

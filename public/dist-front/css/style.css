@@ -1184,39 +1184,39 @@ select {
 
 
 
-/* Cart */
-.cart .small {
+/* reservation */
+.reservation .small {
 	font-size: 13px;
 }
-.cart .table-cart tr th, 
-.cart .table-cart tr td {
+.reservation .table-reservation tr th, 
+.reservation .table-reservation tr td {
 	border: 1px solid #c9c9c9!important;
 }
-.cart .table-cart tr th {
+.reservation .table-reservation tr th {
 	background: #fee5e5;
 }
-.cart table img {
+.reservation table img {
 	width: 100px;
 	height: auto;
 }
-.cart input[type="number"] {
+.reservation input[type="number"] {
 	width: 100px;
 }
-.cart .total {
+.reservation .total {
 	font-size: 18px;
 	font-weight: 600;
 }
-.cart a.cart-delete-link {
+.reservation a.reservation-delete-link {
 	color: #e75542;
 	font-size: 18px;
 }
-.cart input[type="number"] {
+.reservation input[type="number"] {
 	width: 60px;
 	height: 30px;
 	border: 1px solid #c9c9c9;
 	outline: none;
 }
-.cart .room-name {
+.reservation .room-name {
 	color: #000;
 }
 .checkout {
