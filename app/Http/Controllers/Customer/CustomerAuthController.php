@@ -60,38 +60,38 @@ class CustomerAuthController extends Controller
         $obj->email = $request->email;
         $obj->password = $password;
         $obj->token = $token;
-        $obj->status = 1;
+        $obj->status = 0;
         $obj->save();
 
         // Send email
-        // $subject = 'Sign Up Verification';
-        // $message = 'Please click on the link below to confirm sign up process:<br>';
-        // $message .= '<a href="'.$verification_link.'">';
-        // $message .= $verification_link;
-        // $message .= '</a>';
+        $subject = 'Sign Up Verification';
+        $message = 'Please click on the link below to confirm sign up process:<br>';
+        $message .= '<a href="'.$verification_link.'">';
+        $message .= $verification_link;
+        $message .= '</a>';
 
-        // \Mail::to($request->email)->send(new Websitemail($subject,$message));
+        \Mail::to($request->email)->send(new Websitemail($subject,$message));
 
-        return redirect()->back()->with('success', 'you are successfully signed up');
+        return redirect()->back()->with('success', 'To complete the signup, please check your email and click on the link');
 
     }
 
-    // public function signup_verify($email,$token)
-    // {
-    //     $customer_data = Customer::where('email',$email)->where('token',$token)->first();
+    public function signup_verify($email,$token)
+    {
+        $customer_data = Customer::where('email',$email)->where('token',$token)->first();
 
-    //     if($customer_data) {
+        if($customer_data) {
             
-    //         $customer_data->token = '';
-    //         $customer_data->status = 1;
-    //         $customer_data->update();
+            $customer_data->token = '';
+            $customer_data->status = 1;
+            $customer_data->update();
 
-    //         return redirect()->route('customer_login')->with('success', 'Your account is verified successfully!');
+            return redirect()->route('customer_login')->with('success', 'Your account is verified successfully!');
 
-    //     } else {
-    //         return redirect()->route('customer_login');
-    //     }
-    // }
+        } else {
+            return redirect()->route('customer_login');
+        }
+    }
 
     public function logout()
     {
@@ -104,32 +104,32 @@ class CustomerAuthController extends Controller
         return view('front.forget_password');
     }
 
-    // public function forget_password_submit(Request $request)
-    // {
-    //     $request->validate([
-    //         'email' => 'required|email'
-    //     ]);
+    public function forget_password_submit(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email'
+        ]);
 
-    //     $customer_data = Customer::where('email',$request->email)->first();
-    //     if(!$customer_data) {
-    //         return redirect()->back()->with('error','Email address not found!');
-    //     }
+        $customer_data = Customer::where('email',$request->email)->first();
+        if(!$customer_data) {
+            return redirect()->back()->with('error','Email address not found!');
+        }
 
-    //     $token = hash('sha256',time());
+        $token = hash('sha256',time());
 
-    //     $customer_data->token = $token;
-    //     $customer_data->update();
+        $customer_data->token = $token;
+        $customer_data->update();
 
-    //     $reset_link = url('reset-password/'.$token.'/'.$request->email);
-    //     $subject = 'Reset Password';
-    //     $message = 'Please click on the following link to reset the password: <br>';
-    //     $message .= '<a href="'.$reset_link.'">Click here</a>';
+        $reset_link = url('reset-password/'.$token.'/'.$request->email);
+        $subject = 'Reset Password';
+        $message = 'Please click on the following link to reset the password: <br>';
+        $message .= '<a href="'.$reset_link.'">Click here</a>';
 
-    //     \Mail::to($request->email)->send(new Websitemail($subject,$message));
+        \Mail::to($request->email)->send(new Websitemail($subject,$message));
 
-    //     return redirect()->route('customer_login')->with('success','Please check your email and follow the steps there');
+        return redirect()->route('customer_login')->with('success','Please check your email and follow the steps there');
 
-    // }
+    }
 
 
     public function reset_password($token,$email)
