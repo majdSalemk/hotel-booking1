@@ -116,6 +116,13 @@ Route::group(['middleware' => ['admin:admin']], function () {
     Route::get('/admin/customers', [AdminCustomerController::class, 'index'])->name('admin_customer');
     Route::get('/admin/customer/change-status/{id}', [AdminCustomerController::class, 'change_status'])->name('admin_customer_change_status');
 
+    Route::get('/admin/customers/ads', [AdminCustomerController::class, 'index'])->name('admin_customer_add');
+    Route::get('/admin/customer/add', [AdminCustomerController::class, 'add'])->name('admin_customer_add');
+    Route::post('/admin/customer/store', [AdminCustomerController::class, 'store'])->name('admin_customerl_store');
+    Route::get('/admin/customer/edit/{id}', [AdminCustomerController::class, 'edit'])->name('admin_customer_edit');
+    Route::post('/admin/customer/update/{id}', [AdminCustomerController::class, 'update'])->name('admin_customer_update');
+    Route::get('/admin/customer/delete/{id}', [AdminCustomerController::class, 'delete'])->name('admin_customer_delete');
+    
     Route::get('/admin/order/view', [AdminOrderController::class, 'index'])->name('admin_orders');
     Route::get('/admin/order/invoice/{id}', [AdminOrderController::class, 'invoice'])->name('admin_invoice');
     Route::get('/admin/order/delete/{id}', [AdminOrderController::class, 'delete'])->name('admin_order_delete');
