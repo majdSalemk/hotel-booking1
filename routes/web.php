@@ -41,6 +41,7 @@ use App\Http\Controllers\Customer\CustomerOrderController;
 
 
 /* Front */
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
@@ -56,9 +57,9 @@ Route::post('/subscriber/send-email', [SubscriberController::class, 'send_email'
 Route::get('/subscriber/verify/{email}/{token}', [SubscriberController::class, 'verify'])->name('subscriber_verify');
 Route::get('/room', [RoomController::class, 'index'])->name('room');
 Route::get('/room/{id}', [RoomController::class, 'single_room'])->name('room_detail');
-Route::post('/booking/submit', [BookingController::class, 'cart_submit'])->name('cart_submit');
-Route::get('/cart', [BookingController::class, 'cart_view'])->name('cart');
-Route::get('/cart/delete/{id}', [BookingController::class, 'cart_delete'])->name('cart_delete');
+Route::post('/booking/submit', [BookingController::class, 'reservation_submit'])->name('reservation_submit');
+Route::get('/reservation', [BookingController::class, 'reservation_view'])->name('reservation');
+Route::get('/reservation/delete/{id}', [BookingController::class, 'reservation_delete'])->name('reservation_delete');
 Route::get('/checkout', [BookingController::class, 'checkout'])->name('checkout');
 Route::post('/payment', [BookingController::class, 'payment'])->name('payment');
 
@@ -91,7 +92,7 @@ Route::post('/reset-password-submit', [CustomerAuthController::class, 'reset_pas
 
 
 /* Customer - Middleware */
-Route::group(['middleware' =>['customer:customer']], function(){
+Route::group(['middleware' => ['customer:customer']], function () {
     Route::get('/customer/home', [CustomerHomeController::class, 'index'])->name('customer_home');
     Route::get('/customer/edit-profile', [CustomerProfileController::class, 'index'])->name('customer_profile');
     Route::post('/customer/edit-profile-submit', [CustomerProfileController::class, 'profile_submit'])->name('customer_profile_submit');
@@ -101,7 +102,7 @@ Route::group(['middleware' =>['customer:customer']], function(){
 
 
 /* Admin - Middleware */
-Route::group(['middleware' =>['admin:admin']], function(){
+Route::group(['middleware' => ['admin:admin']], function () {
     Route::get('/admin/edit-profile', [AdminProfileController::class, 'index'])->name('admin_profile');
     Route::post('/admin/edit-profile-submit', [AdminProfileController::class, 'profile_submit'])->name('admin_profile_submit');
 
@@ -198,8 +199,8 @@ Route::group(['middleware' =>['admin:admin']], function(){
     Route::get('/admin/page/room', [AdminPageController::class, 'room'])->name('admin_page_room');
     Route::post('/admin/page/room/update', [AdminPageController::class, 'room_update'])->name('admin_page_room_update');
 
-    Route::get('/admin/page/cart', [AdminPageController::class, 'cart'])->name('admin_page_cart');
-    Route::post('/admin/page/cart/update', [AdminPageController::class, 'cart_update'])->name('admin_page_cart_update');
+    Route::get('/admin/page/reservation', [AdminPageController::class, 'reservation'])->name('admin_page_reservation');
+    Route::post('/admin/page/reservation/update', [AdminPageController::class, 'reservation_update'])->name('admin_page_reservation_update');
 
     Route::get('/admin/page/checkout', [AdminPageController::class, 'checkout'])->name('admin_page_checkout');
     Route::post('/admin/page/checkout/update', [AdminPageController::class, 'checkout_update'])->name('admin_page_checkout_update');
@@ -244,4 +245,3 @@ Route::group(['middleware' =>['admin:admin']], function(){
     Route::post('/admin/room/gallery/store/{id}', [AdminRoomController::class, 'gallery_store'])->name('admin_room_gallery_store');
     Route::get('/admin/room/gallery/delete/{id}', [AdminRoomController::class, 'gallery_delete'])->name('admin_room_gallery_delete');
 });
-
