@@ -494,14 +494,19 @@ class BookingController extends Controller
         return redirect()->route('home')->with('success', 'Payment is successful');
 
     }
-
     public function processPayment(Request $request)
     {
-        // Validate the payment method and any other relevant data
+        
         $request->validate([
-            'payment_method' => 'required', // Add your validation rules for payment_method
+            'payment_method' => 'required', 
         ]);
 
         return redirect()->route('home')->with('success', 'Payment is successful');
     }
+
+
+
+    
 }
+
+

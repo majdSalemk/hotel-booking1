@@ -121,7 +121,8 @@
 
                             @else   
 
-                                <li class="menu"><a href="{{ route('customer_home') }}">Dashboard</a></li>
+                            <li class="menu"><a href="{{ route('customer_home') }}">Profile</a></li>
+                            <li class="menu"><a href="{{ route('customer_logout') }}">Log Out</a></li>
 
                             @endif
 

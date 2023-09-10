@@ -19,7 +19,7 @@ class AdminSettingController extends Controller
         $obj = Setting::where('id',1)->first();
         if($request->hasFile('logo')) {
             $request->validate([
-                'logo' => 'image|mimes:jpg,jpeg,png,gif'
+                'logo' => 'image'
             ]);
             unlink(public_path('uploads/'.$obj->logo));
             $ext = $request->file('logo')->extension();

@@ -251,4 +251,5 @@ Route::group(['middleware' => ['admin:admin']], function () {
     Route::get('/admin/room/gallery/{id}', [AdminRoomController::class, 'gallery'])->name('admin_room_gallery');
     Route::post('/admin/room/gallery/store/{id}', [AdminRoomController::class, 'gallery_store'])->name('admin_room_gallery_store');
     Route::get('/admin/room/gallery/delete/{id}', [AdminRoomController::class, 'gallery_delete'])->name('admin_room_gallery_delete');
+    Route::post('/process-payment', [BookingController::class, 'processPayment'])->name('process-payment');
 });
