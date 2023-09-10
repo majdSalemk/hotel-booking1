@@ -2,7 +2,7 @@
 
 @section('main_content')
 
-<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+{{-- <script src="https://www.paypalobjects.com/api/checkout.js"></script> --}}
 
 <div class="page-top">
     <div class="bg"></div>
@@ -67,9 +67,31 @@
                 @endphp
                         
                 <h4>Make Payment</h4>
+
+                                  
+                <form action="{{ route('process-payment')}}" method="post">
+                    @csrf
+                
+                    <!-- Billing information fields here (e.g., name, email, phone, address) -->
+                
+                    <!-- Payment method selection -->
+                    <div class="form-group">
+                        <label for="payment_method">Select Payment Method:</label>
+                        <select name="payment_method" id="payment_method" class="form-control">
+                            <option value="cash">Cash</option>
+                            <option value="Cash">Credit Card</option>
+                            <!-- Add other payment methods as needed -->
+                        </select>
+                    </div>
+                
+                    <button type="submit" id="payment_button" class="btn btn-primary" style="display: none">Proceed to Payment</button>
+                </form>
+                
+               
+                
                 <select name="payment_method" class="form-control select2" id="paymentMethodChange" autocomplete="off">
                     <option value="">Select Payment Method</option>
-                    <option value="PayPal">PayPal</option>
+                    
                     <option value="Stripe">Stripe</option>
                 </select>
 
@@ -252,5 +274,18 @@ $client = 'ARw2VtkTvo3aT7DILgPWeSUPjMK_AS5RlMKkUmB78O8rFCJcfX6jFSmTDpgdV3bOFLG2W
 			return actions.redirect();
 		}
 	}, '#paypal-button');
+</script>
+
+<script>
+    const paymentMethodSelect = document.getElementById("payment_method");
+    const paymentButton = document.getElementById("payment_button");
+
+    paymentMethodSelect.addEventListener("change", function () {
+        if (paymentMethodSelect.value === "cash") {
+            paymentButton.style.display = "block";
+        } else {
+            paymentButton.style.display = "none";
+        }
+    });
 </script>
 @endsection
