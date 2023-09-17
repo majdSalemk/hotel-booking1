@@ -8,7 +8,7 @@
             </form>
             <ul class="navbar-nav navbar-right btn-block justify-content-end">
                 <li class="nav-link">
-                    <a href="" target="_blank" class="btn btn-warning">Front End</a>
+                    <a href="http://localhost:8000/" target="" class="btn btn-warning">Home</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

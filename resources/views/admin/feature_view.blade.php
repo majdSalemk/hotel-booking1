@@ -1,6 +1,6 @@
 @extends('admin.layout.app')
 
-@section('heading', 'View Features')
+@section('heading', 'View Services')
 
 @section('right_top_button')
 <a href="{{ route('admin_feature_add') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Add New</a>

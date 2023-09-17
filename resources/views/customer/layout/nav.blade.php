@@ -8,7 +8,7 @@
             </form>
             <ul class="navbar-nav navbar-right">
                 <li class="nav-link">
-                    <a href="{{ route('home') }}" class="btn btn-warning">Front End</a>
+                    <a href="{{ route('home') }}" class="btn btn-warning">Home</a>
                 </li>
                 <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                     
@@ -30,3 +30,24 @@
                 </li>
             </ul>
         </nav>
+
+        <script>
+            $(document).ready(function() {
+
+                var dropdownTrigger = $('.nav-link-user');
+                var dropdownMenu = $('.dropdown-menu');
+            
+                
+                dropdownTrigger.click(function(e) {
+                    e.preventDefault(); 
+                    dropdownMenu.toggleClass('show'); 
+                });
+            
+
+                $(document).on('click', function(event) {
+                    if (!$(event.target).closest('.dropdown').length) {
+                        dropdownMenu.removeClass('show');
+                    }
+                });
+            });
+            </script>

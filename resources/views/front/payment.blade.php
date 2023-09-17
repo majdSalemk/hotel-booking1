@@ -78,8 +78,9 @@
                     <div class="form-group">
                         <label for="payment_method">Select Payment Method:</label>
                         <select name="payment_method" id="payment_method" class="form-control">
+                            <option value="select">select</option>
                             <option value="cash">Cash</option>
-                            <option value="Cash">Credit Card</option>
+                            <option value="Credit Card">Credit Card</option>
                             <!-- Add other payment methods as needed -->
                         </select>
                     </div>

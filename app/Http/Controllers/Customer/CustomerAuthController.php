@@ -30,7 +30,7 @@ class CustomerAuthController extends Controller
         ];
 
         if (auth()->guard('customer')->attempt($credential)) {
-            return redirect()->route('customer_home');
+            return redirect()->route('home');
         } else {
             return redirect()->route('customer_login')->with('error', 'Information is not correct!');
         }
@@ -72,7 +72,7 @@ class CustomerAuthController extends Controller
 
         // \Mail::to($request->email)->send(new Websitemail($subject, $message));
 
-        return redirect()->back()->with('success', 'To complete the signup, please check your email and click on the link');
+        return redirect()->back()->with('success');
     }
 
     public function signup_verify($email, $token)
