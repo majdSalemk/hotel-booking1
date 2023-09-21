@@ -1,6 +1,6 @@
 @extends('customer.layout.app')
 
-@section('heading', 'My Orders')
+@section('heading', 'My Reservation')
 
 @section('main_content')
 <div class="section-body">
@@ -13,7 +13,7 @@
                             <thead>
                                 <tr>
                                     <th>SL</th>
-                                    <th>Order No</th>
+                                    <th>Reservation No</th>
                                     <th>Payment Method</th>
                                     <th>Booking Date</th>
                                     <th>Paid Amount</th>

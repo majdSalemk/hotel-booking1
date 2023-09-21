@@ -3,7 +3,10 @@
 @section('main_content')
 
 {{-- <script src="https://www.paypalobjects.com/api/checkout.js"></script> --}}
+<style>
+.hidden{display:none !important}
 
+</style>
 <div class="page-top">
     <div class="bg"></div>
     <div class="container">
@@ -72,15 +75,13 @@
                 <form action="{{ route('process-payment')}}" method="post">
                     @csrf
                 
-                    <!-- Billing information fields here (e.g., name, email, phone, address) -->
-                
-                    <!-- Payment method selection -->
+                  
                     <div class="form-group">
                         <label for="payment_method">Select Payment Method:</label>
                         <select name="payment_method" id="payment_method" class="form-control">
                             <option value="select">select</option>
                             <option value="cash">Cash</option>
-                            <option value="Credit Card">Credit Card</option>
+                            <option value="Credit-Card">Credit Card</option>
                             <!-- Add other payment methods as needed -->
                         </select>
                     </div>
@@ -89,13 +90,13 @@
                 </form>
                 
                
-                
-                <select name="payment_method" class="form-control select2" id="paymentMethodChange" autocomplete="off">
+                <div class="hidden" id="stripe">
+                <select name="payment_method" class="form-control select2 " id="paymentMethodChange" autocomplete="off">
                     <option value="">Select Payment Method</option>
                     
                     <option value="Stripe">Stripe</option>
                 </select>
-
+            </div>
                 <div class="paypal mt_20">
                     <h4>Pay with PayPal</h4>
                     <div id="paypal-button"></div>
@@ -280,13 +281,20 @@ $client = 'ARw2VtkTvo3aT7DILgPWeSUPjMK_AS5RlMKkUmB78O8rFCJcfX6jFSmTDpgdV3bOFLG2W
 <script>
     const paymentMethodSelect = document.getElementById("payment_method");
     const paymentButton = document.getElementById("payment_button");
+    const st = document.querySelector("#stripe");
 
     paymentMethodSelect.addEventListener("change", function () {
         if (paymentMethodSelect.value === "cash") {
             paymentButton.style.display = "block";
+            st.classList.add("hidden");
+        } else if (paymentMethodSelect.value === "Credit-Card") {
+            paymentButton.style.display = "none";
+            st.classList.remove("hidden");
         } else {
             paymentButton.style.display = "none";
+            st.classList.add("hidden");
         }
     });
 </script>
+
 @endsection

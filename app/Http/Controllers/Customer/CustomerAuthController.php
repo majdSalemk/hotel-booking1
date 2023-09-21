@@ -71,9 +71,8 @@ class CustomerAuthController extends Controller
         // $message .= '</a>';
 
         // \Mail::to($request->email)->send(new Websitemail($subject, $message));
-
-        return redirect()->back()->with('success');
-    }
+        return redirect()->route('customer_login')->with('success', 'signup successfully');
+     }
 
     public function signup_verify($email, $token)
     {
